@@ -68,13 +68,13 @@ class Net(nn.Module):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.drop1(x)
         
-        x = self.maxpool(F.relu(self.conv2(x)))
+        x = self.pool(F.relu(self.conv2(x)))
         x = self.drop2(x)
         
-        x = self.maxpool(F.relu(self.conv3(x)))
+        x = self.pool(F.relu(self.conv3(x)))
         x = self.drop3(x)
         
-        x = self.maxpool(F.relu(self.conv4(x)))
+        x = self.pool(F.relu(self.conv4(x)))
         x = self.drop4(x)
         
         x = F.relu(self.fc1(x))
