@@ -48,7 +48,7 @@ class Net(nn.Module):
         self.drop4 = nn.Dropout2d(0.4)
         
         # fully connected layers
-        self.fc1 = nn.Linear(11*11*256, 1000)
+        self.fc1 = nn.Linear(30976, 1000)
         self.drop5 = nn.Dropout2d(0.5)
         
         self.fc2 = nn.Linear(1000, 1000)
@@ -77,6 +77,7 @@ class Net(nn.Module):
         x = self.pool(F.relu(self.conv4(x)))
         x = self.drop4(x)
         
+        x = x.view(x.size(0), -1)
         x = F.relu(self.fc1(x))
         x = self.drop5(x)
         
