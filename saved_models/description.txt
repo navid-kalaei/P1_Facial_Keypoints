@@ -1,1 +1,2 @@
 This directory is a convenient place to save and load your trained models.
+unzip the zipped files
