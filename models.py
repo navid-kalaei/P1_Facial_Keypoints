@@ -21,34 +21,28 @@ class Net(nn.Module):
         # As an example, you've been given a convolutional layer, which you may (but don't have to) change:
         # 1 input image channel (grayscale), 32 output channels/feature maps, 5x5 square convolution kernel
         
-        # an architect inspired by NaimishNet has been developed
-        # four conv stage folowing by maxpooling and dropouts
-        # as the papare suggests the dropout propabilities are between 0.1 and 0.6 with a step size of 0.1
-        # how ever to avoid complexity I reduced the number of conv layers from 6 to 4 and began the dropout prob from 0.3
+        # inspired = NaimishNet 
         # https://arxiv.org/pdf/1710.00977.pdf
         
         # each pooling dived the size by 2
         self.pool = nn.MaxPool2d(2, 2)
         
-        
-        # from the last expriences it is best to increase the number of channels by a factor of 2 and as the size of features reduces by pooling it is better to reduces size of the window of conving layer too
-        
         #conv layers
-        self.conv1 = nn.Conv2d(1, 32, 5)
-        self.drop1 = nn.Dropout2d(0.3)
+        self.conv1 = nn.Conv2d(1, 32, 4)
+        self.drop1 = nn.Dropout2d(0.1)
         
         
-        self.conv2 = nn.Conv2d(32, 64, 4)
-        self.drop2 = nn.Dropout2d(0.3)
+        self.conv2 = nn.Conv2d(32, 64, 3)
+        self.drop2 = nn.Dropout2d(0.2)
         
-        self.conv3 = nn.Conv2d(64, 128, 3)
-        self.drop3 = nn.Dropout2d(0.4)
+        self.conv3 = nn.Conv2d(64, 128, 2)
+        self.drop3 = nn.Dropout2d(0.3)
         
-        self.conv4 = nn.Conv2d(128, 256, 3)
+        self.conv4 = nn.Conv2d(128, 256, 1)
         self.drop4 = nn.Dropout2d(0.4)
         
         # fully connected layers
-        self.fc1 = nn.Linear(30976, 1000)
+        self.fc1 = nn.Linear(43264, 1000)
         self.drop5 = nn.Dropout2d(0.5)
         
         self.fc2 = nn.Linear(1000, 1000)
@@ -77,7 +71,7 @@ class Net(nn.Module):
         x = self.pool(F.relu(self.conv4(x)))
         x = self.drop4(x)
         
-        x = x.view(x.size(0), -1)
+        x = x.view(x.size(0), -1) # flatten
         x = F.relu(self.fc1(x))
         x = self.drop5(x)
         
